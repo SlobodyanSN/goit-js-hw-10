@@ -19,7 +19,7 @@ function onInput(e) {
     }
     fetchCountries(e.target.value.trim())
     .then(data => createMarkup(data)).catch(console.error())
-    // .then(string => console.log(string)
+
     
 };
 
@@ -45,7 +45,7 @@ function fetchCountries(name) {
 
 
     function createMarkup(data) 
-     { if (data.length <= 4 && data.length >= 2) {
+     { if (data.length < 10 && data.length > 1) {
         const listMarkup = 
         data.map(({flags, name}) => {
             console.log(`${flags.svg}`);
@@ -53,11 +53,8 @@ function fetchCountries(name) {
             const string =
         
             `<li class="item">
-                <img class="img" src="${flags.svg}" alt="${name.official}">
+                <img class="img-list" src="${flags.svg}" alt="${name.official}">
                 <h2>${name.official}</h2>
-                <h3>Capital : ${capital}</h3>
-                <h3>population : ${population}</h3>
-                <h3>languages : ${Object.values(languages)}</h3>
                 </li>`;
                 return string  
          }
@@ -84,10 +81,6 @@ function fetchCountries(name) {
         .join(` `);
     
         country_info.insertAdjacentHTML(`beforeend`, listMarkup)}
-    
-    
-   
 };
-
 
 

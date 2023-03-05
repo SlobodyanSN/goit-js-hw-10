@@ -19,7 +19,10 @@ body {
   margin-bottom: 16px;
 }
 
+.img-list {
+  height: 50px;
+}
+
 .img {
   height: 100px;
 }
-
