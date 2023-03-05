@@ -10,6 +10,18 @@ const country_info = document.querySelector(`.country-info`)
 const input = document.querySelector(`#search-box`);
 input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY));
 
+function onInput(e) {
+    if (input.value.trim() === "") {
+         Notiflix.Notify.failure(
+            "Oops, there is no country with that name")
+     
+     return
+    }
+    fetchCountries(e.target.value.trim())
+    .then(data => createMarkup(data)).catch(console.error())
+    // .then(string => console.log(string)
+    
+};
 
 function fetchCountries(name) {
     const BASE_URL = `https://restcountries.com/v3.1/name/`
@@ -18,62 +30,64 @@ function fetchCountries(name) {
    return fetch(`${BASE_URL}${name}${FILTER_RESPONSE}`)
     .then(resp => {if (!resp.ok) {
         throw new Error(Notiflix.Notify.failure(
-        "Oops, there is no country with that name"));
-            return
-    
-        //  Notiflix.Notify.failure(
-        //     "Oops, there is no country with that name")
-        //     
+        "Oops, there is no country with that name"));   
     }
     
     const data = resp.json();
     return data;
 })
 .then(data => {if (data.length >= 10) { 
-    throw new Error( Notiflix.Notify.info(
+    throw new Error(Notiflix.Notify.info(
             "Too many matches found. Please enter a more specific name."))
-        
-    }}) .then(data =>{ if (data.length >= 4 && data.length >= 2) {
-        
-    }} )
-    
-    
-    .catch(console.error())
-};
-
-function createMarkup (data) {
-
-    const listMarkup = 
-    data.map(({flags, name, capital, population, languages
-    }) => {
-        console.log(`${flags.svg}`);
-        console.log(`${name.official}`);
-        const string =
-    
-        `<li class="item">
-            <img class="img" src="${flags.svg}" alt="${name.official}">
-            <h2>${name.official}</h2>
-            <h3>Capital : ${capital}</h3>
-            <h3>population : ${population}</h3>
-            <h3>languages : ${Object.values(languages)}</h3>
-            </li>`;
-            return string  
-     }
-    )
-    .join(` `);
-
-    country_info.insertAdjacentHTML(`beforeend`, listMarkup)
-}
-
-function onInput (e) {
-    if (input.value.trim() === "") {
-         Notiflix.Notify.failure(
-            "Oops, there is no country with that name")
-     
-     return
     }
-    fetchCountries(e.target.value.trim())
-    .then(data => createMarkup(data))
-    // .then(string => console.log(string)
+    return data
+}); ;};
+
+
+    function createMarkup(data) 
+     { if (data.length <= 4 && data.length >= 2) {
+        const listMarkup = 
+        data.map(({flags, name}) => {
+            console.log(`${flags.svg}`);
+            console.log(`${name.official}`);
+            const string =
+        
+            `<li class="item">
+                <img class="img" src="${flags.svg}" alt="${name.official}">
+                <h2>${name.official}</h2>
+                <h3>Capital : ${capital}</h3>
+                <h3>population : ${population}</h3>
+                <h3>languages : ${Object.values(languages)}</h3>
+                </li>`;
+                return string  
+         }
+        )
+        .join(` `);
     
+        country_list.insertAdjacentHTML(`beforeend`, listMarkup)
+    }
+        else { const listMarkup = 
+        data.map(({flags, name, capital, population, languages
+        }) => {
+            console.log(`${flags.svg}`);
+            console.log(`${name.official}`);
+            const string =
+            `   <img class="img" src="${flags.svg}" alt="${name.official}">
+                <h2>${name.official}</h2>
+                <h3>Capital : ${capital}</h3>
+                <h3>population : ${population}</h3>
+                <h3>languages : ${Object.values(languages)}</h3>
+                `;
+                return string  
+         }
+        )
+        .join(` `);
+    
+        country_info.insertAdjacentHTML(`beforeend`, listMarkup)}
+    
+    
+   
 };
+
+
+
