@@ -3,8 +3,10 @@ import Notiflix from 'notiflix';
 
 
 const debounce = require('lodash.debounce');
+
 const DEBOUNCE_DELAY = 300;
-const list = document.querySelector(`.country-list`)
+const country_list = document.querySelector(`.country-list`)
+const country_info = document.querySelector(`.country-info`)
 const input = document.querySelector(`#search-box`);
 input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY));
 
@@ -15,23 +17,28 @@ function fetchCountries(name) {
   
    return fetch(`${BASE_URL}${name}${FILTER_RESPONSE}`)
     .then(resp => {if (!resp.ok) {
-        return Notiflix.Notify.failure(
-            "Oops, there is no country with that name")
-            
-    // throw new Error(Notiflix.Notify.failure(
-    //     "Oops, there is no country with that name"));
-        
+        throw new Error(Notiflix.Notify.failure(
+        "Oops, there is no country with that name"));
+            return
+    
+        //  Notiflix.Notify.failure(
+        //     "Oops, there is no country with that name")
+        //     
     }
     
     const data = resp.json();
-    if (data.length >= 10) {
-        
-        Notiflix.Notify.info(
-            "Too many matches found. Please enter a more specific name.")
-            return
-    }
     return data;
-}) 
+})
+.then(data => {if (data.length >= 10) { 
+    throw new Error( Notiflix.Notify.info(
+            "Too many matches found. Please enter a more specific name."))
+        
+    }}) .then(data =>{ if (data.length >= 4 && data.length >= 2) {
+        
+    }} )
+    
+    
+    .catch(console.error())
 };
 
 function createMarkup (data) {
@@ -55,14 +62,15 @@ function createMarkup (data) {
     )
     .join(` `);
 
-    list.insertAdjacentHTML(`beforeend`, listMarkup)
+    country_info.insertAdjacentHTML(`beforeend`, listMarkup)
 }
 
 function onInput (e) {
-    if (e.target.value.trim() ==="") {
-        return Notiflix.Notify.failure(
+    if (input.value.trim() === "") {
+         Notiflix.Notify.failure(
             "Oops, there is no country with that name")
      
+     return
     }
     fetchCountries(e.target.value.trim())
     .then(data => createMarkup(data))
