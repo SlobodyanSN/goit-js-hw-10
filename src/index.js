@@ -18,9 +18,10 @@ function onInput(e) {
      return
     }
     fetchCountries(e.target.value.trim())
-    .then(data => createMarkup(data)).catch(console.error())
+    .then(data => checkDataLenght(data))
+    .then(data => createMarkup(data))
+    .catch(console.error())
 
-    
 };
 
 function fetchCountries(name) {
@@ -35,13 +36,16 @@ function fetchCountries(name) {
     
     const data = resp.json();
     return data;
-})
-.then(data => {if (data.length >= 10) { 
+});};
+
+function checkDataLenght(data) 
+{if (data.length >= 10) { 
     throw new Error(Notiflix.Notify.info(
             "Too many matches found. Please enter a more specific name."))
     }
     return data
-}); ;};
+}; 
+
 
 
     function createMarkup(data) 
