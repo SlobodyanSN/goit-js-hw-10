@@ -12,20 +12,20 @@ input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY));
 function onInput(e) {
     if (input.value.trim().length < 1 ) {
        return 
+
     };
     console.log(input.value);
     if (input.value.trim() === "") {
       cleanAll();
          Notiflix.Notify.failure(
-            "Oops, there is no country with that name");
-     
+            "Oops, there is no country with that name");   
      return;
+
     };
     fetchCountries(e.target.value.trim())
     .then(data => checkDataLenght(data))
     .then(data => createMarkup(data))
     .catch(console.error())
-
 };
 
 function checkDataLenght(data) 
@@ -46,19 +46,17 @@ function checkDataLenght(data)
             console.log(`${flags.svg}`);
             console.log(`${name.official}`);
             const string =
-        
             `<li class="item">
                 <img class="img-list" src="${flags.svg}" alt="${name.official}">
                 <h2>${name.official}</h2>
-                </li>`;
+            </li>`;
                 return string  
          }
         )
         .join(` `);
         country_info.innerHTML = ``;
     
-        country_list.insertAdjacentHTML(`beforeend`, listMarkup);
-         
+        country_list.insertAdjacentHTML(`beforeend`, listMarkup);  
     }
         else { const listMarkup = 
         data.map(({flags, name, capital, population, languages
