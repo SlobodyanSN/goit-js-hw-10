@@ -11,17 +11,16 @@ input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(e) {
     if (input.value.trim().length < 1 ) {
-       return 
-
+       return; 
     };
-    console.log(input.value);
+
     if (input.value.trim() === "") {
       cleanAll();
          Notiflix.Notify.failure(
             "Oops, there is no country with that name");   
      return;
-
     };
+
     fetchCountries(e.target.value.trim())
     .then(data => checkDataLenght(data))
     .then(data => createMarkup(data))
@@ -32,7 +31,7 @@ function checkDataLenght(data)
 {if (data.length >= 10) { 
   cleanAll();
     throw new Error(Notiflix.Notify.info(
-            "Too many matches found. Please enter a more specific name."))
+            "Too many matches found. Please enter a more specific name."));
     }
     return data
 }; 
@@ -61,8 +60,6 @@ function checkDataLenght(data)
         else { const listMarkup = 
         data.map(({flags, name, capital, population, languages
         }) => {
-            console.log(`${flags.svg}`);
-            console.log(`${name.official}`);
             const string =
             `   <img class="img" src="${flags.svg}" alt="${name.official}">
                 <h2>${name.official}</h2>
@@ -75,8 +72,6 @@ function checkDataLenght(data)
         )
         .join(` `);
         country_list.innerHTML = ``;  
-
-    
         country_info.insertAdjacentHTML(`beforeend`, listMarkup)};
        
 };
