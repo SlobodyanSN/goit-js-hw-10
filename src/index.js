@@ -42,18 +42,16 @@ function checkDataLenght(data)
      { if (data.length < 10 && data.length > 1) {
         const listMarkup = 
         data.map(({flags, name}) => {
-            console.log(`${flags.svg}`);
-            console.log(`${name.official}`);
             const string =
             `<li class="item">
                 <img class="img-list" src="${flags.svg}" alt="${name.official}">
-                <h2>${name.official}</h2>
+                <h5>${name.official}</h5>
             </li>`;
                 return string  
          }
         )
         .join(` `);
-        country_info.innerHTML = ``;
+        cleanAll();
     
         country_list.insertAdjacentHTML(`beforeend`, listMarkup);  
     }
@@ -71,9 +69,8 @@ function checkDataLenght(data)
          }
         )
         .join(` `);
-        country_list.innerHTML = ``;  
-        country_info.insertAdjacentHTML(`beforeend`, listMarkup)};
-       
+        cleanAll();
+        country_info.insertAdjacentHTML(`beforeend`, listMarkup)};   
 };
 
 function cleanAll() {

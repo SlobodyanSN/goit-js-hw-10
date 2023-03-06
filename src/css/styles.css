@@ -20,9 +20,24 @@ body {
 }
 
 .img-list {
-  height: 50px;
+  width: 100px;
 }
 
 .img {
   height: 100px;
+}
+
+.country-list {
+  list-style: none;
+  align-items: center;
+}
+
+.item {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+h5 {
+margin-left: 20px;
 }
