@@ -15,9 +15,8 @@ function onInput(e) {
     };
 
     if (input.value.trim() === "") {
-      cleanAll();
-         Notiflix.Notify.failure(
-            "Oops, there is no country with that name");   
+         Notiflix.Notify.failure("Oops, there is no country with that name");
+           cleanAll();    
      return;
     };
 
