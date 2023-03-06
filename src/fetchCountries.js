@@ -1,4 +1,5 @@
 export { fetchCountries };
+import Notiflix from 'notiflix';
 
 const BASE_URL = `https://restcountries.com/v3.1/name/`;
 const FILTER_RESPONSE = `?fields=name,flags,name,capital,population,languages`;
